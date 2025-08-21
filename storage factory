@@ -1,0 +1,37 @@
+// SDPX-License-Identifier: MIT
+pragma solidity ^0.8.30;
+
+pragma solidity >=0.7.0 < 0.9.0;
+
+contract SimpleStorage{
+    uint256 public favouritenumber;  //uint is unsigned integer we are initialising it to 5 if dont write 5 then it will take 0
+   
+    struct People{
+        uint256 favouritenumber;
+        string name;
+    }
+    People public person = People({favouritenumber : 7, name : "Saumya"}); //dictionary
+
+    People[] public people;  //dynamic array
+
+    function addPerson(string memory _name, uint256 _favouritenumber) public{
+        people.push(People({favouritenumber : _favouritenumber, name : _name}));  //adding to the array we use push function
+    }
+
+    function Store(uint256 _favouritenumber) public {
+        favouritenumber = _favouritenumber;
+    }   //parameter is uint256, func name is store, Public functions are part of the contract interface and can be either called internally or via messages.
+   
+    function retrieve() public view returns (uint256){      //pure function is for mathematical transactions
+        return favouritenumber;
+    }
+}
+
+contract StorageFactory{
+    SimpleStorage[] public simpleStorageArray;
+    function createSimpleStoragecontract() public {
+        SimpleStorage simpleStorage = new SimpleStorage();
+        simpleStorageArray.push(simpleStorage);
+    }
+
+}
